@@ -1,0 +1,146 @@
+<!-- Hero Banner -->
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <header class="event-header">
+    <div class="header-logos">
+      <img src="3Y-Logo-SVG-ArkaPlansiz.svg" alt="3Y Topluluğu" class="logo-3y" />
+      <img src="kiro_banner.jpg" alt="Kiro AI IDE" class="logo-kiro" />
+      <img src="aws.png" alt="Amazon Web Services" class="logo-aws" />
+    </div>
+
+    <div class="event-title-block">
+      <h1 class="event-title">AI Amazon Day</h1>
+      <p class="event-subtitle">Amazon Kiro IDE'yi keşfet — <span class="badge">Made by Kiro IDE</span></p>
+    </div>
+  </header>
+
+  <!-- Form Card -->
+  <main class="form-section">
+    @if (!submitted()) {
+      <div class="card">
+        <h2 class="card-title">Etkinliğe Kayıt Ol</h2>
+        <p class="card-desc">Aşağıdaki bilgileri eksiksiz doldurarak etkinliğe kaydolabilirsin.</p>
+        <div class="made-by-kiro">
+          <img src="kiro.webp" alt="Kiro" class="kiro-badge-icon" />
+          <span>Bu form <strong>Kiro IDE</strong> ile geliştirildi</span>
+        </div>
+
+        <form #regForm="ngForm" (ngSubmit)="regForm.valid && onSubmit()" novalidate>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="firstName">Ad</label>
+              <input id="firstName" name="firstName" type="text" placeholder="Adınız"
+                [(ngModel)]="form.firstName" required #fn="ngModel"
+                (keydown)="onlyLetters($event)"
+                [class.invalid]="fn.invalid && fn.touched" />
+              @if (fn.invalid && fn.touched) {
+                <span class="err">Ad zorunludur.</span>
+              }
+            </div>
+            <div class="field">
+              <label for="lastName">Soyad</label>
+              <input id="lastName" name="lastName" type="text" placeholder="Soyadınız"
+                [(ngModel)]="form.lastName" required #ln="ngModel"
+                (keydown)="onlyLetters($event)"
+                [class.invalid]="ln.invalid && ln.touched" />
+              @if (ln.invalid && ln.touched) {
+                <span class="err">Soyad zorunludur.</span>
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="faculty">Fakülte</label>
+            <input id="faculty" name="faculty" type="text" placeholder="Fakülteniz"
+              [(ngModel)]="form.faculty" required #fac="ngModel"
+              (keydown)="onlyLetters($event)"
+              [class.invalid]="fac.invalid && fac.touched" />
+            @if (fac.invalid && fac.touched) {
+              <span class="err">Fakülte zorunludur.</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="department">Bölüm</label>
+            <input id="department" name="department" type="text" placeholder="Bölümünüz"
+              [(ngModel)]="form.department" required #dep="ngModel"
+              (keydown)="onlyLetters($event)"
+              [class.invalid]="dep.invalid && dep.touched" />
+            @if (dep.invalid && dep.touched) {
+              <span class="err">Bölüm zorunludur.</span>
+            }
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="grade">Sınıf</label>
+              <select id="grade" name="grade" [(ngModel)]="form.grade" required #gr="ngModel"
+                [class.invalid]="gr.invalid && gr.touched">
+                <option value="" disabled>Sınıf seçin</option>
+                @for (g of grades; track g) {
+                  <option [value]="g">{{ g }}</option>
+                }
+              </select>
+              @if (gr.invalid && gr.touched) {
+                <span class="err">Sınıf zorunludur.</span>
+              }
+            </div>
+            <div class="field">
+              <label for="studentNumber">Öğrenci Numarası</label>
+              <input id="studentNumber" name="studentNumber" type="text" placeholder="Öğrenci No"
+                [(ngModel)]="form.studentNumber" required #sn="ngModel"
+                (keydown)="onlyNumbers($event)"
+                [class.invalid]="sn.invalid && sn.touched" />
+              @if (sn.invalid && sn.touched) {
+                <span class="err">Öğrenci numarası zorunludur.</span>
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="phone">Telefon Numarası</label>
+            <input id="phone" name="phone" type="tel" placeholder="05XX XXX XX XX"
+              [(ngModel)]="form.phone" required maxlength="11" #ph="ngModel"
+              (keydown)="onlyNumbers($event)"
+              [class.invalid]="ph.invalid && ph.touched" />
+            @if (ph.invalid && ph.touched) {
+              <span class="err">Telefon numarası zorunludur.</span>
+            }
+          </div>
+
+          <button type="submit" class="btn-submit" [disabled]="regForm.invalid || loading()">
+            {{ loading() ? 'Kaydediliyor...' : 'Kayıt Ol' }}
+          </button>
+
+          @if (error()) {
+            <p class="form-error">{{ error() }}</p>
+          }
+        </form>
+      </div>
+    } @else {
+      <!-- Success State -->
+      <div class="card success-card">
+        <div class="success-icon">✓</div>
+        <h2>Kaydın Alındı!</h2>
+        <p>Merhaba <strong>{{ form.firstName }} {{ form.lastName }}</strong>, etkinliğe başarıyla kaydoldun.</p>
+        <div class="summary">
+          <div class="summary-row"><span>Fakülte</span><span>{{ form.faculty }}</span></div>
+          <div class="summary-row"><span>Bölüm</span><span>{{ form.department }}</span></div>
+          <div class="summary-row"><span>Sınıf</span><span>{{ form.grade }}</span></div>
+          <div class="summary-row"><span>Öğrenci No</span><span>{{ form.studentNumber }}</span></div>
+          <div class="summary-row"><span>Telefon</span><span>{{ form.phone }}</span></div>
+        </div>
+        <button class="btn-reset" (click)="reset()">Yeni Kayıt</button>
+      </div>
+    }
+  </main>
+
+  <footer class="event-footer">
+    <span>3Y Yazılım Yapay Zeka Yazılım Topluluğu</span>
+    <span class="dot">·</span>
+    <img src="kiro.webp" alt="Kiro" class="footer-kiro-icon" />
+    <span>Made with <span class="heart">♥</span> using <strong>Kiro IDE</strong></span>
+  </footer>
+</div>
