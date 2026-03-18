@@ -34,7 +34,7 @@ export class Registration {
     phone: ''
   };
 
-  grades = ['1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf'];
+  grades = ['Hazırlık', '1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf', '5. Sınıf', '6. Sınıf'];
 
   // Sadece harf ve boşluk (ad, soyad, fakülte, bölüm)
   onlyLetters(e: KeyboardEvent) {
