@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SheetsService } from './sheets.service';
@@ -19,10 +19,38 @@ interface RegistrationForm {
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
-export class Registration {
+export class Registration implements OnDestroy {
   submitted = signal(false);
   loading = signal(false);
   error = signal('');
+
+  // Geri sayım — 16 Nisan 2026 saat 12:00
+  readonly targetDate = new Date('2026-04-16T12:00:00');
+  countdown = signal({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  private countdownInterval: ReturnType<typeof setInterval> | null = null;
+
+  private updateCountdown() {
+    const diff = this.targetDate.getTime() - Date.now();
+    if (diff <= 0) {
+      this.countdown.set({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      if (this.countdownInterval) clearInterval(this.countdownInterval);
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    this.countdown.set({ days, hours, minutes, seconds });
+  }
+
+  private startCountdown() {
+    this.updateCountdown();
+    this.countdownInterval = setInterval(() => this.updateCountdown(), 1000);
+  }
+
+  ngOnDestroy() {
+    if (this.countdownInterval) clearInterval(this.countdownInterval);
+  }
 
   form: RegistrationForm = {
     firstName: '',
@@ -62,6 +90,7 @@ export class Registration {
       next: () => {
         this.loading.set(false);
         this.submitted.set(true);
+        this.startCountdown();
       },
       error: () => {
         this.loading.set(false);
@@ -74,5 +103,6 @@ export class Registration {
     this.form = { firstName: '', lastName: '', department: '', grade: '', studentNumber: '', faculty: '', phone: '' };
     this.submitted.set(false);
     this.error.set('');
+    if (this.countdownInterval) { clearInterval(this.countdownInterval); this.countdownInterval = null; }
   }
 }

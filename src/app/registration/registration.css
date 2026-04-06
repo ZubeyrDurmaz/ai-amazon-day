@@ -313,3 +313,60 @@ select option {
   .event-title { font-size: 1.4rem; }
   .card { padding: 1.5rem 1.2rem; }
 }
+
+/* ── Countdown ── */
+.countdown-block {
+  margin-top: 1.8rem;
+  padding: 1.2rem 1rem;
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.25);
+  border-radius: 12px;
+}
+
+.countdown-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  min-width: 64px;
+}
+
+.countdown-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.countdown-text {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.3rem;
+  letter-spacing: 0.05em;
+}
+
+.countdown-date {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: rgba(167,139,250,0.7);
+}

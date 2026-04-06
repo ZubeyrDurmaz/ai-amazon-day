@@ -133,6 +133,30 @@
           <div class="summary-row"><span>Telefon</span><span>{{ form.phone }}</span></div>
         </div>
         <button class="btn-reset" (click)="reset()">Yeni Kayıt</button>
+
+        <!-- Geri Sayım -->
+        <div class="countdown-block">
+          <p class="countdown-label">Etkinliğe kalan süre</p>
+          <div class="countdown-grid">
+            <div class="countdown-unit">
+              <span class="countdown-num">{{ countdown().days }}</span>
+              <span class="countdown-text">Gün</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-num">{{ countdown().hours }}</span>
+              <span class="countdown-text">Saat</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-num">{{ countdown().minutes }}</span>
+              <span class="countdown-text">Dakika</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-num">{{ countdown().seconds }}</span>
+              <span class="countdown-text">Saniye</span>
+            </div>
+          </div>
+          <p class="countdown-date">16 Nisan 2026 · Saat 12:00</p>
+        </div>
       </div>
     }
   </main>
